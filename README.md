@@ -109,7 +109,7 @@ Similarly, we can get logs of nginx on host machine
 docker run -p 8080:80 -d --name web -v /home/ubuntu/data:/usr/share/nginx/html -v /home/ubuntu/data:/var/log/nginx nginx
 ```
 
-Descriptive way of adding a volume or mounting a directory
+## Verbose way of adding a volume or mounting a directory
 
 ```
 The option --mount help to add volume in descriptive. Here type can be bind or volume.
