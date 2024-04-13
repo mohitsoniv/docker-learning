@@ -6,5 +6,17 @@ that are based on this image. These triggers are executed when the image is used
 
 Here, we have 2 files, which is the base file and application dockerfile which use dockerfile-base image as base.
 
+Create a base Image
+```
+docker build onbuild-test .
+```
 
+Create application image
+```
+docker build myapp .
+```
 
+Run the container
+```
+docker run --name myapp -p 8000:8000 myapp
+```
