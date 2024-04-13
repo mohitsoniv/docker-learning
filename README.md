@@ -18,4 +18,19 @@ ENTRYPOINT:
 CMD:
     The CMD instruction provides default arguments for the ENTRYPOINT or sets an executable if no ENTRYPOINT is specified.
     It's used to specify the default command to be executed when the container starts, but it can be overridden by providing a command and its arguments when running the container with docker run.
-        
+
+
+To check different behaviour of ENTRYPOINT and CMD, please play around the dockerfile by uncommenting CMD and ENTRYPOINT lines one at a time and creating new image out of it.
+
+Below commands can be used to create image and run a container from the image
+
+Build Image
+
+```
+docker build -t myos .
+```
+
+Run a container
+```
+docker run --name myos --rm myos <argument>
+```
