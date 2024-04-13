@@ -105,3 +105,8 @@ Now when you run a docker command then it will get executed on remote Docker
 docker ps
 docker images
 ```
+
+To check available version on a machine please run command
+```
+apt-cache madison docker-ce | awk '{ print $3 }'
+```
