@@ -81,7 +81,7 @@ Add or modify the following lines, substituting your own values.
 ```
 [Service]
 ExecStart=
-ExecStart=/usr/bin/dockerd -H fd:// -H tcp://127.0.0.1:2375
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375
 ```
 Save the file.
 
@@ -92,4 +92,16 @@ Reload the systemctl configuration.
 Restart Docker.
 ```
  sudo systemctl restart docker.service
+```
+
+To execute command from a remote
+
+```
+export DOCKER_HOST=tcp://44.221.213.176:2375
+```
+
+Now when you run a docker command then it will get executed on remote Docker
+```
+docker ps
+docker images
 ```
