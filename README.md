@@ -97,7 +97,7 @@ Restart Docker.
 To execute command from a remote
 
 ```
-export DOCKER_HOST=tcp://44.221.213.176:2375
+export DOCKER_HOST=tcp://<IPAddress>:2375
 ```
 
 Now when you run a docker command then it will get executed on remote Docker
