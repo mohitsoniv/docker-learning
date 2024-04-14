@@ -7,6 +7,14 @@ Docker allows you to separate your applications from your infrastructure so you 
 
 You can download and install Docker on multiple platforms. Below are the steps to install it on Ubuntu
 
+If you have docker already installed, then you can uinstall it first
+
+## Uninstall Docker
+```
+sudo apt-get remove docker-ce
+sudo apt-get remove docker-ce-cli
+```
+
 ## Install Docker using the below URL
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04 
 
@@ -100,10 +108,12 @@ To execute command from a remote
 export DOCKER_HOST=tcp://<IPAddress>:2375
 ```
 
-Now when you run a docker command then it will get executed on remote Docker
+Now when you run a docker command then it will get executed on remote Docker **(without sudo)**
 ```
 docker ps
 docker images
+
+# Run above command without sudo. When you run Docker commands with sudo, it typically runs them in the context of the root user. This means that environment variables like DOCKER_HOST might not set globally. 
 ```
 
 To check available version on a machine please run command
