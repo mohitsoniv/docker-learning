@@ -3,9 +3,7 @@
 
 Flattening Docker images refers to the process of consolidating the layers of an image into a single layer. In Docker, an image is built up from a series of layers, where each layer represents a set of filesystem changes or instructions in the Dockerfile. These layers are stacked on top of each other, and the final image is the result of these layers combined.
 
-This can be useful for several reasons:
-1. <B>Reducing Image Size:</B> Flattening an image can reduce its size. Since each layer introduces some overhead, combining them into a single layer can result in a smaller image size.
-2. <B>Optimizing for Caching:</B> Docker uses layer caching during the build process. If a layer changes, all subsequent layers need to be rebuilt. By flattening an image, you may reduce the number of layers, making it more likely that Docker can use cached layers during subsequent builds.
+
 
 
 # Create an Image for testing flatten image
