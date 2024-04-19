@@ -118,5 +118,30 @@ Ports	Description
 
 ## Macvlan Network
 
+This is a type of network driver in Docker that allows containers to have their own MAC addresses, making them appear as individual devices on the network.
+
+Each container connected to a macvlan network is assigned a unique MAC address. This makes the containers appear as separate devices on the network, similar to physical machines.
+
+When you create a Macvlan network and attach containers to it, Docker configures the containers to use a virtual network interface that is associated with the physical network interface of the host. This allows the containers to communicate directly with the physical network, as if they were physical machines connected to the same network.
+
+Create a macvlan network
+```
+docker network create -d macvlan --subnet=172.16.86.0/24  --gateway=172.16.86.1 -o parent=eth0 macvlan
+
+# List Networks
+docker network ls
+```
+
+Create a container in macvlan network
+```
+docker run --name web -d --rm --network macvlan -p 8080:80 nginx
+
+docker run --name web1 -d --rm --network macvlan -p 8080:80 nginx
+
+curl <aipaddress for web>:8080
+curl <aipaddress for web1>:8080
+```
+
+
 
 
