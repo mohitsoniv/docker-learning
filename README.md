@@ -142,6 +142,38 @@ curl <aipaddress for web>:8080
 curl <aipaddress for web1>:8080
 ```
 
+## None
+The None network in Docker is a special network mode that isolates containers from any networking. When you create a container with the --network=none option, Docker places the container into its own network namespace with no network interfaces. This means the container has no network connectivity, neither to the host nor to any other containers.
+
+The None network is useful in scenarios where you want to run a container in complete isolation from the network, like  -     1. If you have a container that doesn't require network access for its functionality and you want to minimize its attack surface, you can use the None network to isolate it completely.
+
+```
+docker run --name isolated-nginx --network=none -d nginx
+
+docker inspect isolated-nginx
+```
+
+To verify that the NGINX server is running, we can still access it from within the container. We can use docker exec to execute commands inside the container and curl to make a request to the NGINX server
+
+```
+docker exec isolated-nginx curl http://localhost
+```
+
+## Network Prune
+
+We can use the following command to clean up networks which aren’t used by any containers:
+```
+docker network prune
+```
+
+# Docker Link
+
+A docker link is a old way of connecting 2 or more containers. As of now, we are using Network port to connect 2 containers, earlier using link we can connect 2 containers without exposing ports. 
+
+
+
+
+
 
 
 
