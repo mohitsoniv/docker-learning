@@ -9,7 +9,8 @@ docker run -d --name db  -e POSTGRES_PASSWORD=password postgres
 
 Create a python container web and link it with DB conatiner above
 ```
-docker run -d -p 8000:8000  --name web --link db vcjain/python-app
+docker build -t python-app .
+docker run -d -p 8000:8000  --name web --link db python-app
 ```
 
 Above web app expose 2 APIs
