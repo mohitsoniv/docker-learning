@@ -30,7 +30,21 @@ sudo docker info --format '{{.LoggingDriver}}'
 
 To set a log driver for a conatiner we can use --log-driver option
 ```
-docker run -d --name web --log-driver=json-file nginx
+sudo docker run -d --name web --log-driver=json-file --log-opt mode=non-blocking nginx
+
+sudo docker inspect web
+
+# Output
+
+    "HostConfig": {
+        "Binds": null,
+        "ContainerIDFile": "",
+        "LogConfig": {
+            "Type": "json-file",
+            "Config": {
+                "mode": "non-blocking"
+            }
+        },
 ```
 
 If your application is producing json logs the you will be able to see logs in json with logs command
