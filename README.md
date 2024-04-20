@@ -158,6 +158,57 @@ To verify that the NGINX server is running, we can still access it from within t
 docker exec isolated-nginx curl http://localhost
 ```
 
+## Configuring DNS configuration
+Containers use the same DNS servers as the host by default, but you can override this with --dns. 
+
+```
+sudo nano /etc/docker/daemon.json
+
+# Add following lines
+
+{
+    "dns": ["8.8.8.8"]
+}
+
+# Note: Press Ctrl+X to exit the editor. Then type Y and press Enter to save the file.
+```
+
+Restart the docker
+```
+sudo docker systemctl restart docker
+```
+
+Use the following command to test the DNS by looking up an external domain:
+```
+sudo docker run nicolaka/netshoot nslookup google.com
+
+# Output
+    Server:         8.8.8.8
+    Address:        8.8.8.8#53
+
+    Non-authoritative answer:
+    Name:   google.com
+    Address: 142.251.215.238
+    Name:   google.com
+    Address: 2607:f8b0:400a:800::200e
+```
+
+Use the following command to run a container with a custom DNS and test it by doing an nslookup:
+```
+sudo docker run --dns 8.8.4.4 nicolaka/netshoot nslookup facebook.com
+
+# Output
+    Server:         8.8.4.4
+    Address:        8.8.4.4#53
+
+    Non-authoritative answer:
+    Name:   facebook.com
+    Address: 157.240.3.35
+    Name:   facebook.com
+    Address: 2a03:2880:f101:83:face:b00c:0:25de
+```
+
+
 ## Network Prune
 
 We can use the following command to clean up networks which aren’t used by any containers:
@@ -165,6 +216,7 @@ We can use the following command to clean up networks which aren’t used by any
 docker network prune
 ```
 
+<br><br>
 # Docker Link
 
 A docker link is a old way of connecting 2 or more containers. As of now, we are using Network port to connect 2 containers, earlier using link we can connect 2 containers without exposing ports. 
