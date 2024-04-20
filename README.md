@@ -134,6 +134,16 @@ docker run -d --name web --mount type=tmpfs,destination=/app nginx
 docker inspect web --format '{{ json .Mounts }}'
 ```
 
+## Applying Labels and Filters
+```
+sudo docker volume create --label use=dbdata db
+sudo docker volume create --label use=appdata app
+```
+List volumes based on applied filter
+```
+sudo docker volume ls --filter "label=use=dbdata"
+```
+
 ## Backup and Restore
 
 There is no straight forward way to backup a volume and restore it. We will need to backup a volume directory manually and will need to restore it as well it manually. 
