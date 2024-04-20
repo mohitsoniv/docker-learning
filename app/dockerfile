@@ -1,0 +1,10 @@
+FROM python:3.9
+
+# Copy the Python application
+COPY app.py /app.py
+
+# Install dependencies
+RUN pip install python-json-logger
+
+# Run the Python application
+CMD ["python", "/app.py"]
