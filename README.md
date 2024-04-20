@@ -120,6 +120,18 @@ docker run -p 8080:80 -d --name web --mount type=bind,source=/home/ubuntu/data,d
 
 docker run -p 5432:5432 -d --name db -e POSTGRES_PASSWORD=password --mount type=volume,source=postgre-data,destination=/var/lib/postgresql/data postgres
 
+# Option with readonly bind, it can apply for both named volume and bind type.
+docker run -p 8080:80 -d --name web --mount type=bind,source=/home/ubuntu/data,destination=/var/log/nginx,readonly nginx
+
+```
+## Create a container with a volume using tmpfs
+The tmpfs mount option in Docker allows you to create a temporary, in-memory filesystem within a container. When you mount a tmpfs filesystem at a specific directory (e.g., /app) in a Docker container, any files or directories created within that directory will exist only in memory and will not be persisted to disk.
+
+```
+docker run -d --name web --mount type=tmpfs,destination=/app nginx
+# There is no source in tmpfs mount type
+
+docker inspect web --format '{{ json .Mounts }}'
 ```
 
 ## Backup and Restore
