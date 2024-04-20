@@ -208,6 +208,16 @@ sudo docker run --dns 8.8.4.4 nicolaka/netshoot nslookup facebook.com
     Address: 2a03:2880:f101:83:face:b00c:0:25de
 ```
 
+## Applying Labels & Filters
+
+```
+sudo docker network create -d bridge --label platform.type=backend  mybridge
+```
+
+List network based on filter
+```
+sudo docker network ls --filter "label=platform.type=backend"
+```
 
 ## Network Prune
 
