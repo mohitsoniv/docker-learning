@@ -126,20 +126,19 @@ When you create a Macvlan network and attach containers to it, Docker configures
 
 Create a macvlan network
 ```
-docker network create -d macvlan --subnet=172.16.86.0/24  --gateway=172.16.86.1 -o parent=eth0 macvlan
+sudo docker network create -d macvlan --subnet=172.16.86.0/24 --gateway=172.16.86.1 -o parent=docker0 macvlan
+
 
 # List Networks
-docker network ls
+sudo docker network ls
 ```
 
 Create a container in macvlan network
 ```
-docker run --name web -d --rm --network macvlan -p 8080:80 nginx
+sudo docker run --name web -it --network macvlan nginx
+sudo docker inspect web
 
-docker run --name web1 -d --rm --network macvlan -p 8080:80 nginx
-
-curl <aipaddress for web>:8080
-curl <aipaddress for web1>:8080
+# Check the Mac Address in Network section.
 ```
 
 ## None
