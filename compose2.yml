@@ -11,7 +11,7 @@ services:
       - mynet
     container_name: web
   db:
-    image: postgres
+    image: postgres:16-alpine
     ports:
       - "5432:5432"
     depends_on:
