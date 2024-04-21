@@ -20,7 +20,24 @@ docker volume inspect <vol-name>
 docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=password -v postgre-data:/var/lib/postgresql/data postgres
 ```
 
-Get into the database conatiner and create tables and insert some data
+## Expose a volume directory in image
+
+To expose the the volume directory in the image, we need to specify Volume instruction in the dockerfile. Below is an example of exposing the Volume in dockerfile. When a user creates a container from below image then he can specify the volume path of container in -v option 
+```
+    FROM some_base_image
+
+    # Create a directory for the volume
+    RUN mkdir /path/to/volume
+
+    # Specify the volume, 
+    # you can use below path in -v option in run command
+    VOLUME /path/to/volume
+
+    # Other instructions for setting up your container
+```
+
+
+Let get into the database container and create tables and insert some data.
 
 ```
 docker exec -it db /bin/bash
@@ -68,15 +85,25 @@ Clean resources
 docker rm -f db
 docker volume rm postgre-data
 ```
+<br><br>
+# Bind Mount
 
-## Create a container with a volume using bind option
+Below is the format to specify a bind option
+```
+Option# 1 -
+docker run -v <Absolute path to host directory>:<path to volume directory> image-name
 
+Option# 2 - 
+docker run --mount type=bind,source=<Absolute path to host directory>,destination=<path to volume directory> image-name
+
+```
+Lets do a practice to bind directory from a host to conatiner. We will create a nginx container and will bind the host directory with a contaioner directory where nginx index.html page is located. When we change the index.html content in host, it will be reflected in the container and vise versa. 
 ```
 # Create a data directory to bind with container
 
 mkdir /home/ubuntu/data
 cd /home/ubuntu/data
-nano index.html
+sudo nano index.html
 ```
 Copy below content to the nano editor
 ```
@@ -94,7 +121,9 @@ Copy below content to the nano editor
 
 Run a nginx container and bind the html directory
 ```
-docker run -p 8080:80 -d --name web -v /home/ubuntu/data:/usr/share/nginx/html nginx
+sudo docker run -p 8080:80 -d --rm --name web -v /home/ubuntu/data:/usr/share/nginx/html nginx
+
+# Here /usr/share/nginx/html is the directory in which default page index.html of nginx server is located.
 ```
 
 Browsre the nginx page
