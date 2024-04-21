@@ -175,7 +175,7 @@ sudo nano /etc/docker/daemon.json
 
 Restart the docker
 ```
-sudo docker systemctl restart docker
+sudo systemctl restart docker
 ```
 
 Use the following command to test the DNS by looking up an external domain:
