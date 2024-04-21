@@ -17,7 +17,7 @@ docker volume inspect <vol-name>
 ```
 # Creating a PostgresSql database with volume
 
-docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=password -v postgre-data:/var/lib/postgresql/data postgres
+docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=password -v postgre-data:/var/lib/postgresql/data postgre:16-alpine
 ```
 
 ## Expose a volume directory in image
