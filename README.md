@@ -191,7 +191,7 @@ sudo nano /etc/docker/daemon.json
 Add following content into it 
 ```
 {
-    "storage-driver": "devicemapper "
+    "storage-driver": "devicemapper"
 }
 ```
 
