@@ -17,7 +17,7 @@ docker volume inspect <vol-name>
 ```
 # Creating a PostgresSql database with volume
 
-docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=password -v postgre-data:/var/lib/postgresql/data postgre:16-alpine
+docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=password -v postgre-data:/var/lib/postgresql/data postgres:16-alpine
 ```
 
 ## Expose a volume directory in image
@@ -180,6 +180,29 @@ sudo docker volume ls --filter "label=use=dbdata"
 To delete unused volumes we can use prune command, as we have used for Image and Network
 ```
 sudo docker volume prune
+```
+
+## Device Mapper
+
+```
+sudo nano /etc/docker/daemon.json
+```
+
+Add following content into it 
+```
+{
+    "storage-driver": "devicemapper "
+}
+```
+
+Restart service
+```
+sudo systemctl restart docker
+```
+
+Check Docker info
+```
+sudo docker info
 ```
 
 ## Backup and Restore
