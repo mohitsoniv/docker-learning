@@ -1,7 +1,7 @@
 # Dockerfile for the web application
 
 # Use the official Python image as base
-FROM python:3.9
+FROM python:3.6
 
 # Set working directory
 WORKDIR /app
