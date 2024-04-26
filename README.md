@@ -52,6 +52,10 @@ docker service ps web
 Scale In/Out replicas
 ```
 docker service update web --replicas=2
+
+OR 
+
+docker service scale web=2
 ```
 
 
@@ -72,6 +76,28 @@ docker node update --availability drain worker1
 
 You can see that the container on worker1 is deleted and restarted on another node.
 ```
+
+## Stacks
+
+Similar to docker compose in non swarm mode, we have stack in swarm mode. Same compose yaml file can work for docker compose command and for stack command. 
+
+```
+docker stack deploy -c compose.yaml myapp
+```
+
+some other commands
+
+```
+Command	                    Description
+docker stack config	        Outputs the final config file, after doing merges and interpolations
+docker stack deploy	        Deploy a new stack or update an existing stack
+docker stack ls	            List stacks
+docker stack ps	            List the tasks in the stack
+docker stack rm	            Remove one or more stacks
+docker stack services	    List the services in the stack
+```
+
+
 
 
 
