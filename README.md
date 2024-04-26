@@ -62,7 +62,7 @@ docker run vcjain/dct-test:signed
 
 Disable the Docker Content Trust
 ```
-export DOCKER_CONTENT_TRUST=1
+export DOCKER_CONTENT_TRUST=0
 ```
 
 
