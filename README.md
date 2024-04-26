@@ -174,9 +174,13 @@ Many times, we face a scenario, where we want to restrict our services to run on
 We will need to apply some labels on the Node. We can put constraints and preference based on node labels.
 
 ```
-docker node update --label-add web=true worker1
+docker node update --label-add web=true <node-id>
 ```
-
+Deploying Service with constraints
+```
+docker service create --name web -p 8080:80 --replicas=2 --constraint  node.labels.web==true nginx
+```
+If you specify multiple placement constraints, the service only deploys onto nodes where they are all met. It works on AND.
 
 
 
