@@ -26,6 +26,11 @@ Get list of all nodes in the cluster
 docker node ls
 ```
 
+Give name to Node
+```
+docker node update --label-add nodename=<new-name> <node-id>
+```
+
 Create Service
 ```
 docker service create --name web -p 8080:80 nginx
@@ -95,6 +100,81 @@ docker stack ls	            List stacks
 docker stack ps	            List the tasks in the stack
 docker stack rm	            Remove one or more stacks
 docker stack services	    List the services in the stack
+```
+
+## Locking a Swarm Cluster
+To secure your cluster we can lock our swarm cluster so that only authorize person with unlock key can perform operations
+
+we can provide option to lock cluster at the time of cluster creation
+
+```
+docker swarm init --autolock --advertise-addr <MANAGER-IP>
+
+Output - It will print a unlock key, which should be copy paste for future reference
+
+        docker swarm join \
+        --token SWMTKN-1-0j52ln6hxjpxk2wgk917abcnxywj3xed0y8vi1e5m9t3uttrtu-7bnxvvlz2mrcpfonjuztmtts9 \
+        172.31.46.109:2377
+    
+        To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+        
+        To unlock a swarm manager after it restarts, run the `docker swarm unlock`
+        command and provide the following key:
+    
+         SWMKEY-1-WuYH/IX284+lRcXuoVf38viIDK3HJEKY13MIHX+tTt8
+```
+
+### Unlock a Cluster
+
+```
+docker swarm unlock
+```
+
+### Disable/Enable autolock in existing cluster
+```
+docker swarm update --autolock=true
+Output:
+    Swarm updated.
+    To unlock a swarm manager after it restarts, run the `docker swarm unlock` command and provide the following key:
+
+        SWMKEY-1-ve8x/te7WQ03FkIAgoGxAKEdnh04sowvtVsxQ3HkG5I
+
+    Please remember to store this key in a password manager, since without it you will not be able to restart the manager.
+
+docker swarm update --autolock=false
+```
+When you restart docker service, it will auto lock and you will need to unlock it first to execute commands
+```
+sudo systemctl restart docker
+
+# Perform some opeartion
+docker service ls
+
+Output : Error response from daemon: Swarm is encrypted and needs to be unlocked before it can be used. Use "docker swarm unlock" to unlock it.
+
+# Unlock cluster
+docker service unlock
+```
+
+### Get unlock key
+```
+docker swarm unlock-key
+```
+
+### Rotate your unlock key
+```
+docker swarm unlock-key --rotate
+
+# When you rotate the unlock key, keep a record of the old key around for a few minutes, so that if a manager goes down before it gets the new key, it may still be unlocked with the old one.
+```
+
+## Placement & Constraints
+Many times, we face a scenario, where we want to restrict our services to run on some specific node only. This constraints because of some OS, compliance and any other dependencies. 
+
+We will need to apply some labels on the Node. We can put constraints and preference based on node labels.
+
+```
+docker node update --label-add web=true worker1
 ```
 
 
