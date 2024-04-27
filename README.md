@@ -3,7 +3,7 @@
 Initializing swarm cluster
 
 ```
-docker swarm init --advertise-addr <MANAGER-IP>
+sudo docker swarm init --advertise-addr <MANAGER-IP>
 
 Output
     Swarm initialized: current node (xl0q412t4guvcf8x8zxku3ski) is now a manager.
@@ -17,69 +17,75 @@ Output
 
 Get join token for manager and worker
 ```
-docker swarm join-token worker
-docker swarm join-token manager
+sudo docker swarm join-token worker
+sudo docker swarm join-token manager
 ```
 
 Get list of all nodes in the cluster
 ```
-docker node ls
+sudo docker node ls
 ```
 
 Give name to Node
 ```
-docker node update --label-add nodename=<new-name> <node-id>
+sudo docker node update --label-add nodename=<new-name> <node-id>
 ```
 
 Create Service
 ```
-docker service create --name web -p 8080:80 nginx
+sudo docker service create --name web -p 8080:80 nginx
 
 
 # With more than one 1 instance
-docker service create --name web -p 8080:80 --replicas=2 nginx
+sudo docker service create --name web -p 8080:80 --replicas=2 nginx
 
 
 # Global service
-docker service create --name web -p 8080:80 --mode global nginx
+sudo docker service create --name web -p 8080:80 --mode global nginx
 ```
 
 List all running service
 ```
-docker service web ls
+sudo docker service ls
 ```
 
 List all tasks running for a service
 ```
-docker service ps web
+sudo docker service ps web
 ```
 
 Scale In/Out replicas
 ```
-docker service update web --replicas=2
+sudo docker service update web --replicas=2
 
 OR 
 
-docker service scale web=2
+sudo docker service scale web=2
 ```
+Rollback last changes. It will only rollback the last change.
 
+```
+sudo docker service rollback web
+```
 
 ## Swarm Draining
 
-To mark a node as unavaiable, we can use below command
-```
-# Run/scale a nginx service with 2 or more replicas, so that one of the container is started on the node which you want to drain out.
+To mark a node as unavaiable, we can use below command. 
 
-docker service create --name web -p 8080:80 --replicas=2 nginx
+Run/scale a nginx service with 2 or more replicas, so that one of the container is started on the node which you want to drain out.
+```
+# 
+
+sudo docker service create --name web -p 8080:80 --replicas=2 nginx
 
 OR if existing
 
-docker service update web --replicas=2
+sudo docker service update web --replicas=2
 
 
-docker node update --availability drain worker1
+sudo docker node update --availability drain <NodeID>
 
-You can see that the container on worker1 is deleted and restarted on another node.
+You can see that the container on specified node is deleted and restarted on another node.
 ```
 
 ## Stacks
@@ -87,7 +93,7 @@ You can see that the container on worker1 is deleted and restarted on another no
 Similar to docker compose in non swarm mode, we have stack in swarm mode. Same compose yaml file can work for docker compose command and for stack command. 
 
 ```
-docker stack deploy -c compose.yaml myapp
+sudo docker stack deploy -c compose.yaml myapp
 ```
 
 some other commands
@@ -108,7 +114,7 @@ To secure your cluster we can lock our swarm cluster so that only authorize pers
 we can provide option to lock cluster at the time of cluster creation
 
 ```
-docker swarm init --autolock --advertise-addr <MANAGER-IP>
+sudo docker swarm init --autolock --advertise-addr <MANAGER-IP>
 
 Output - It will print a unlock key, which should be copy paste for future reference
 
@@ -127,12 +133,12 @@ Output - It will print a unlock key, which should be copy paste for future refer
 ### Unlock a Cluster
 
 ```
-docker swarm unlock
+sudo docker swarm unlock
 ```
 
 ### Disable/Enable autolock in existing cluster
 ```
-docker swarm update --autolock=true
+sudo docker swarm update --autolock=true
 Output:
     Swarm updated.
     To unlock a swarm manager after it restarts, run the `docker swarm unlock` command and provide the following key:
@@ -141,29 +147,29 @@ Output:
 
     Please remember to store this key in a password manager, since without it you will not be able to restart the manager.
 
-docker swarm update --autolock=false
+sudo docker swarm update --autolock=false
 ```
 When you restart docker service, it will auto lock and you will need to unlock it first to execute commands
 ```
 sudo systemctl restart docker
 
 # Perform some opeartion
-docker service ls
+sudo docker service ls
 
 Output : Error response from daemon: Swarm is encrypted and needs to be unlocked before it can be used. Use "docker swarm unlock" to unlock it.
 
 # Unlock cluster
-docker service unlock
+sudo docker service unlock
 ```
 
 ### Get unlock key
 ```
-docker swarm unlock-key
+sudo docker swarm unlock-key
 ```
 
 ### Rotate your unlock key
 ```
-docker swarm unlock-key --rotate
+sudo docker swarm unlock-key --rotate
 
 # When you rotate the unlock key, keep a record of the old key around for a few minutes, so that if a manager goes down before it gets the new key, it may still be unlocked with the old one.
 ```
@@ -174,11 +180,11 @@ Many times, we face a scenario, where we want to restrict our services to run on
 We will need to apply some labels on the Node. We can put constraints and preference based on node labels.
 
 ```
-docker node update --label-add web=true <node-id>
+sudo docker node update --label-add web=true <node-id>
 ```
 Deploying Service with constraints
 ```
-docker service create --name web -p 8080:80 --replicas=2 --constraint  node.labels.web==true nginx
+sudo docker service create --name web -p 8080:80 --replicas=2 --constraint  node.labels.web==true nginx
 ```
 If you specify multiple placement constraints, the service only deploys onto nodes where they are all met. It works on AND.
 
