@@ -2,6 +2,26 @@
 
 Install Docker EE using Mirantis Launchpad
 
+Pre-Requistic
+1. Atleast 2 Ec2 machine of Ubuntu 20.04 LTS image, one for Manager and 2 worker
+2. One worker will used for Docker registry
+
+Generate Keys
+```
+ssh-keygen
+```
+Authorized_keys for master and worker node
+```
+touch .ssh/authorized_keys
+chmod -R 700 .ssh
+vi .ssh/authorized_keys
+```
+
+Check the connection to worker node
+```
+ssh ubuntu@<ip-address>
+```
+
 Download and install Mirantis Launchpad on the UCP Manager server using launchpad version 1.5.6:
 ```
 wget https://get.mirantis.com/launchpad/v1.5.6/launchpad_linux_amd64_1.5.6
@@ -100,24 +120,24 @@ spec:
     - |-
       --dtr-ca "<contents of ca.crt>"
   hosts:
-  - address: <IP Address of Manager>
+  - address: <PRIVATE IP Address of Manager>
     privateInterface: eth0
     role: manager
     ssh:
-      user: labsuser
-      keyPath: /home/labsuser/.ssh/id_rsa
-  - address: <IP Address of Worker>
+      user: ubuntu
+      keyPath: /home/ubuntu/.ssh/id_rsa
+  - address: <PRIVATE IP Address of Worker>
     privateInterface: eth0
     role: worker
     ssh:
-      user: labsuser
-      keyPath: /home/labsuser/.ssh/id_rsa
-  - address: <IP Address of DTR Node>
+      user: ubuntu
+      keyPath: /home/ubuntu/.ssh/id_rsa
+  - address: <PRIVATE IP Address of DTR Node>
     privateInterface: eth0
     role: dtr
     ssh:
-      user: labsuser
-      keyPath: /home/labsuser/.ssh/id_rsa
+      user: ubuntu
+      keyPath: /home/ubuntu/.ssh/id_rsa
 ```
 Check the privateInterface to apply using ifconfig command. It can be eth0 or ens5. 
 
@@ -147,7 +167,7 @@ Then create the cluster itself using Launchpad:
 ```
 ./launchpad apply -c ./cluster.yaml
 
-# It will take some time
+# It will take some time, around 10 - 15 mins
 ```
 
 To access your UCP instance, open a web browser and navigate to https:// followed by the public IP address of the UCP Manager server. You may have to manually allow the self-signed certificate on your browser.
