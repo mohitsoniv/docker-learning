@@ -87,6 +87,10 @@ sudo docker node update --availability drain <NodeID>
 
 You can see that the container on specified node is deleted and restarted on another node.
 ```
+Mark Node availability
+```
+sudo docker node update --availability active  <node-id>
+```
 
 ## Stacks
 
@@ -159,7 +163,7 @@ sudo docker service ls
 Output : Error response from daemon: Swarm is encrypted and needs to be unlocked before it can be used. Use "docker swarm unlock" to unlock it.
 
 # Unlock cluster
-sudo docker service unlock
+sudo docker swarm unlock
 ```
 
 ### Get unlock key
