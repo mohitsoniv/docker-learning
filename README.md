@@ -3,7 +3,7 @@
 Install Docker EE using Mirantis Launchpad
 
 Pre-Requistic
-1. Atleast 2 Ec2 machine of Ubuntu 20.04 LTS image, one for Manager and 2 worker. AWS AMI Image - ami-09cc6a8fafaecf851
+1. Atleast 2 Ec2 machine, t2.large of Ubuntu 20.04 LTS image, one for Manager and 2 worker. AWS AMI Image - ami-09cc6a8fafaecf851
 2. One worker will used for Docker registry
 
 Generate Keys
