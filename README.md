@@ -13,12 +13,19 @@ ssh-keygen
 Authorized_keys for master and worker node
 ```
 touch .ssh/authorized_keys
+```
+```
 chmod -R 700 .ssh
+```
+```
 cat .ssh/id_rsa.pub
+```
 
-# Add the content of public key into authorized_keys
+###  Add the content of public key into authorized_keys
+```
 vi .ssh/authorized_keys
 ```
+Follow same for all the worker nodes.
 
 Check the connection to worker node
 ```
@@ -46,10 +53,9 @@ View the Launchpad version number:
 Register the cluster:
 ``` 
 ./launchpad register
-
-# When prompted, enter in your name, email, and company name.
-Type "Y" to accept the license agreement.
 ```
+When prompted, enter in your name, email, and company name. Type "Y" to accept the license agreement.
+
 ## Generate Certificates for DTR
 
 Generate a certificate using open SSL:
@@ -91,8 +97,9 @@ Generate the public certificate for the server, passing in the certificate signi
 ```
 openssl x509 -req -in dtr.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out dtr.crt -days 365 -sha256 -extfile extfile.cnf
 ```
-    
-Create the Cluster
+<br>
+
+## Create the Cluster
 Create a cluster configuration file:
 ```
 vi cluster.yaml
@@ -147,7 +154,9 @@ Check the privateInterface to apply using ifconfig command. It can be eth0 or en
 Save and exit this file:
     :wq
 
-Then look at the certificate file:
+Below steps we will need to perform if we are installing DTR as well.
+****
+
 ```
 cat dtr.crt
 ```
@@ -166,7 +175,10 @@ vi cluster.yaml
 Save and exit the cluster.yaml file:
     :wq
 
-Then create the cluster itself using Launchpad:
+*****
+<br><br><br>
+
+Now we are ready to launch our configuration
 ```
 ./launchpad apply -c ./cluster.yaml
 
