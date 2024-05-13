@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 # Insert a record in users table
 INSERT INTO users (id , username, email ) 
-            VALUES (1,    'vcjain', 'vcjain@self.com');
+            VALUES (1,    'mohitsoniv', 'mohitsoniv@gmail.com');
 
 ```
 
